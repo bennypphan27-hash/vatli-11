@@ -94,6 +94,25 @@
                 });
                 return;
             }
+
+            // --- MỚI: Kiểm tra xem học sinh đã làm sót câu nào chưa ---
+             let allAnswered = true;
+             for (let i = 0; i < questions.length; i++) {
+                if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+                    allAnswered = false;
+                    break; // Dừng kiểm tra nếu thấy câu chưa làm
+                }
+            }
+
+            if (!allAnswered) {
+                Swal.fire({
+                    title: 'Chưa xong đâu nhé!',
+                    text: 'Em hình như bỏ sót câu hỏi rồi, kiểm tra lại nha ✨',
+                    icon: 'info',
+                    confirmButtonText: 'Để em kiểm tra lại'
+                });
+                return; // Dừng lại, không cho nộp bài
+            }
             
             let score = 0;
             questions.forEach((item, index) => {
