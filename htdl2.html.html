@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260709-03-59b406b"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn tập hệ thức độc lập số 1</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+        body { 
+            font-family: 'DM Sans', sans-serif;
+            background-image: radial-gradient(circle, #ec407a 1px, transparent 1px);
+            background-size: 15px 15px;
+            background-position: 0 0;
+        }
+        .question-card { border-left: 4px solid #ec407a; }
+        .feedback { display: none; }
+        .feedback.show { display: block; }
+        #student-name {
+            border: 2px solid #ec407a !important;
+        }
+        #student-name:focus {
+            border-color: #c2185b !important;
+        }
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/0179d719c431a79e.data_sdk.js" type="text/javascript" integrity="sha512-OsRvJkI5GkC3MJQcgotQYotpzrMSX415GiKKgvYdxQEEkzD/fdchShO2FMSy0PJr/tiINMXOk5Vl2zAgg6bUiA=="></script>
+  <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen p-4 md:p-8">
+  <main class="max-w-2xl mx-auto">
+   <header class="text-center mb-6">
+    <h1 data-template-id="page-title" class="canva-text text-2xl font-bold mb-1"></h1>
+    <p data-template-id="class-info" class="canva-text text-sm"></p>
+   </header>
+   <div data-template-id="name-box" class="canva-card p-4 rounded-2xl mb-6"><label data-template-id="name-label" class="canva-text font-bold block mb-2" for="student-name"></label> <input type="text" id="student-name" data-template-id="name-input" class="canva-input w-full p-3 rounded-lg outline-none focus:ring-2 focus:ring-pink-500" placeholder="Nhập tên của em vào đây...">
+   </div>
+   <div id="quiz-container"></div><button id="submit-btn" data-template-id="submit-button" class="canva-button w-full p-4 rounded-xl text-lg font-bold mt-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="submitQuiz()"></button>
+   <div id="result-area" data-template-id="result-area" class="canva-section hidden text-center mt-6 p-5 rounded-2xl text-xl font-bold"></div>
+  </main>
+  <script src="/_sdk/719055fef2a85d14.editing_sdk.js" integrity="sha512-kFqrdGgIiTOsu307feB5Cy3JVP9IayftsmCIZ0csxYBGuBmJQPhyvcnmKR8F0fTW97h5s1gAvz3SumI8zJ6OxQ=="></script>
+  <script>
+        const questions = [
+            { q: "Một chất điểm dao động điều hòa với $A = 10$ cm. Khi $x = 6$ cm thì $v = 80$ cm/s. Tần số góc $\\omega$ là:", options: ["10 rad/s", "20 rad/s", "8 rad/s", "5 rad/s"], answer: 0, exp: "$\\omega = v / \\sqrt{A^2 - x^2} = 10$ rad/s." },
+            { q: "Vật dao động điều hòa có $f = 5$ Hz, $A = 4$ cm. Tại $x = 2$ cm, vận tốc $v$ có độ lớn là:", options: ["$20\\pi\\sqrt{3}$ cm/s", "$40\\pi\\sqrt{3}$ cm/s", "$10\\pi\\sqrt{3}$ cm/s", "$30\\pi\\sqrt{3}$ cm/s"], answer: 0, exp: "$v = \\omega\\sqrt{A^2 - x^2} = 20\\pi\\sqrt{3}$ cm/s." },
+            { q: "Vật dao động điều hòa trên quỹ đạo $L = 16$ cm. Tại VTCB, $v = 40$ cm/s. Tần số góc là:", options: ["5 rad/s", "10 rad/s", "2 rad/s", "20 rad/s"], answer: 0, exp: "$A = L/2 = 8$ cm. $\\omega = v_{max} / A = 5$ rad/s." },
+            { q: "Vật có $x = 4\\cos(10t - \\pi/6)$ (cm). Vận tốc khi $x = 2$ cm là:", options: ["$\\pm 20\\sqrt{3}$ cm/s", "$\\pm 20$ cm/s", "$\\pm 40$ cm/s", "$\\pm 10\\sqrt{3}$ cm/s"], answer: 0, exp: "$v = \\pm \\omega\\sqrt{A^2 - x^2} = \\pm 20\\sqrt{3}$ cm/s." },
+            { q: "Tại $t_1: x_1=4$ cm, $v_1=30$ cm/s. Tại $t_2: x_2=3$ cm, $v_2=40$ cm/s. Biên độ $A$ là:", options: ["4 cm", "5 cm", "6 cm", "7 cm"], answer: 1, exp: "Sử dụng $A^2 = x^2 + (v/\\omega)^2$, giải hệ ta được $A = 5$ cm." },
+            { q: "Chu kỳ $T = 0,2\\pi$ s. Khi $x = 3$ cm thì $v = 40$ cm/s. Biên độ $A$ là:", options: ["4 cm", "5 cm", "6 cm", "7 cm"], answer: 1, exp: "$\\omega = 10$ rad/s. $A = 5$ cm." },
+            { q: "$v_{max} = 100$ cm/s. Khi $x = 6$ cm thì $v = 80$ cm/s. Tần số góc $\\omega$ là:", options: ["10 rad/s", "20 rad/s", "5 rad/s", "25 rad/s"], answer: 0, exp: "Từ $v^2 = \\omega^2(A^2 - x^2)$, tính được $\\omega = 10$ rad/s." },
+            { q: "$\\omega = 10$ rad/s. Khi $x = 2$ cm thì $v = 20\\sqrt{3}$ cm/s. Quỹ đạo $L$ là:", options: ["4 cm", "8 cm", "10 cm", "16 cm"], answer: 1, exp: "$A = \\sqrt{x^2 + (v/\\omega)^2} = 4$ cm. $L = 2A = 8$ cm." },
+            { q: "$x = 8\\cos(5\\pi t + \\pi/4)$ (cm). Tại $x = 4$ cm, vận tốc $v$ có độ lớn là:", options: ["$20\\pi\\sqrt{3}$ cm/s", "$10\\pi\\sqrt{3}$ cm/s", "$40\\pi$ cm/s", "$20\\pi$ cm/s"], answer: 0, exp: "$v = \\omega\\sqrt{A^2 - x^2} = 20\\pi\\sqrt{3}$ cm/s." },
+            { q: "Tại $t_1: x_1=3$ cm, $v_1=-60\\sqrt{3}$ cm/s. $t_2: x_2=3\\sqrt{2}$ cm, $v_2=60\\sqrt{2}$ cm/s. $A$ và $\\omega$ là:", options: ["6 cm; 20 rad/s", "6 cm; 12 rad/s", "12 cm; 20 rad/s", "12 cm; 10 rad/s"], answer: 0, exp: "Kết quả: $A = 6$ cm, $\\omega = 20$ rad/s." }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        questions.forEach((item, index) => {
+            let html = `<div class="question-card bg-white/80 rounded-2xl p-4 mb-4 shadow-md">
+                <p class="font-medium mb-3"><b>Câu ${index + 1}:</b> ${item.q}</p>`;
+            item.options.forEach((opt, i) => {
+                html += `<label class="flex items-center gap-2 py-1 cursor-pointer hover:bg-pink-50 px-2 rounded-lg">
+                    <input type="radio" name="q${index}" value="${i}" class="accent-pink-600 w-4 h-4"> 
+                    <span>${opt}</span>
+                </label>`;
+            });
+            html += `<div id="f${index}" class="feedback mt-3 p-3 rounded-lg text-sm"></div></div>`;
+            container.innerHTML += html;
+        });
+
+        if (window.MathJax && MathJax.typeset) MathJax.typeset();
+
+        function submitQuiz() {
+            const name = document.getElementById('student-name').value.trim();
+            if (!name) {
+                const nameInput = document.getElementById('student-name');
+                nameInput.classList.add('ring-2', 'ring-red-400');
+                nameInput.focus();
+                return;
+            }
+
+            let score = 0;
+            questions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const feedback = document.getElementById(`f${index}`);
+                feedback.classList.add('show');
+
+                if (selected && parseInt(selected.value) === item.answer) {
+                    feedback.style.backgroundColor = "#d4edda";
+                    feedback.style.color = "#155724";
+                    feedback.innerHTML = "✓ Chính xác! " + item.exp;
+                    score++;
+                } else {
+                    feedback.style.backgroundColor = "#f8d7da";
+                    feedback.style.color = "#721c24";
+                    feedback.innerHTML = "✗ Sai. Đáp án: " + item.options[item.answer] + ". " + item.exp;
+                }
+            });
+
+            const resultArea = document.getElementById('result-area');
+            resultArea.classList.remove('hidden');
+            resultArea.textContent = "🌸 " + name.toUpperCase() + ": " + score + "/10 🌸";
+            document.getElementById('submit-btn').style.display = "none";
+
+            // Disable all radios
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+
+            if (window.MathJax && MathJax.typeset) MathJax.typeset();
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a18468fd84726c47',t:'MTc4MzU2OTUwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
