@@ -97,11 +97,11 @@
                 
                 if (selected && parseInt(selected.value) === item.answer) {
                     feedback.style.backgroundColor = "#d4edda";
-                    feedback.innerHTML = "Chính xác! Giải thích: " + item.exp;
+                    feedback.innerHTML = "✅Chính xác! <br> 📝Giải thích: " + item.exp;
                     score++;
                 } else {
                     feedback.style.backgroundColor = "#f8d7da";
-                    feedback.innerHTML = "Sai rồi. Đáp án đúng: " + item.options[item.answer] + ". Giải thích: " + item.exp;
+                    feedback.innerHTML = "❌Sai rồi. <br> 📝Đáp án đúng: " + item.options[item.answer] + ". Giải thích: " + item.exp;
                 }
             });
             document.getElementById('result-area').innerHTML = "✨ TỔNG ĐIỂM CỦA " + name.toUpperCase() + " : " + score + "/10";
