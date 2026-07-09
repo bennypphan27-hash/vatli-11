@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ôn tập hệ thức độc lập số 1 - Lớp Lí cô Nguyên</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
@@ -85,7 +86,12 @@
         function submitQuiz() {
             const name = document.getElementById('student-name').value;
             if (name.trim() === "") {
-                alert("Em vui lòng nhập tên trước khi nộp bài nhé!");
+                Swal.fire({
+                      title: 'Thông báo!',
+                      text: 'Em vui lòng nhập tên trước khi nộp bài nhé!',
+                      icon: 'warning',
+                      confirmButtonText: 'Đã hiểu'
+                });
                 return;
             }
             
@@ -104,7 +110,12 @@
                     feedback.innerHTML = "❌Sai rồi. <br> 📝Đáp án đúng: " + item.options[item.answer] + ". Giải thích: " + item.exp;
                 }
             });
-            document.getElementById('result-area').innerHTML = "✨ TỔNG ĐIỂM CỦA " + name.toUpperCase() + " : " + score + "/10";
+            Swal.fire({
+                title: '✨ Kết quả của ' + name.toUpperCase() + ' ✨',
+                text: 'Tổng điểm của em là: ' + score + '/10',
+                icon: 'success',
+                confirmButtonText: 'Đóng'
+            });
             document.getElementById('submit-btn').style.display = "none";
             MathJax.typeset();
         }
