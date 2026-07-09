@@ -12,10 +12,6 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
-        .timer-alert { 
-            color: red !important; 
-            transform: scale(1.1); /* Phóng to nhẹ khi gần hết giờ */
-        }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             line-height: 1.6; max-width: 600px; margin: 20px auto; padding: 15px; 
@@ -71,9 +67,6 @@
             <a href="index.html" class="back-btn">🏠 Trở về thư viện chính</a>
     </div>
     <h2>🌸 Ôn tập hệ thức độc lập số 1 🌸</h2>
-    <div id="timer" style="text-align: center; font-size: 24px; font-weight: bold; color: #d81b60; margin: 15px 0; transition: 0.5s;">
-    Thời gian còn lại: <span id="time">10:00</span>
-    </div>
     <h4 style="text-align:center; color: #ad1457;">Lớp Lí cô Nguyên</h4>
     
     <div class="info-box">
@@ -98,35 +91,7 @@
             { q: "$x = 8\\cos(5\\pi t + \\pi/4)$ (cm). Tại $x = 4$ cm, vận tốc $v$ có độ lớn là:", options: ["$20\\pi\\sqrt{3}$ cm/s", "$10\\pi\\sqrt{3}$ cm/s", "$40\\pi$ cm/s", "$20\\pi$ cm/s"], answer: 0, exp: "$v = \\omega\\sqrt{A^2 - x^2} = 20\\pi\\sqrt{3}$ cm/s." },
             { q: "Tại $t_1: x_1=3$ cm, $v_1=-60\\sqrt{3}$ cm/s. $t_2: x_2=3\\sqrt{2}$ cm, $v_2=60\\sqrt{2}$ cm/s. $A$ và $\\omega$ là:", options: ["6 cm; 20 rad/s", "6 cm; 12 rad/s", "12 cm; 20 rad/s", "12 cm; 10 rad/s"], answer: 0, exp: "Kết quả: $A = 6$ cm, $\\omega = 20$ rad/s." }
         ];
-// Thiết lập đồng hồ 10 phút (600 giây)
-let timeLeft = 600;
-const timerDisplay = document.getElementById('time');
-const timerContainer = document.getElementById('timer');
 
-const countdown = setInterval(() => {
-    let m = Math.floor(timeLeft / 60);
-    let s = timeLeft % 60;
-    
-    // Cập nhật số phút:giây
-    timerDisplay.innerHTML = `${m}:${s < 10 ? '0' : ''}${s}`;
-    
-    // Khi còn dưới 1 phút (60 giây), đổi màu đỏ
-    if (timeLeft <= 60) {
-        timerContainer.classList.add('timer-alert');
-    }
-
-    // Khi hết giờ
-    if (timeLeft <= 0) {
-        clearInterval(countdown);
-        Swal.fire({ 
-            title: 'Hết giờ!', 
-            text: 'Thời gian đã hết, bài của em sẽ được nộp ngay.', 
-            icon: 'error' 
-        });
-        submitQuiz(); // Tự động nộp bài
-    }
-    timeLeft--;
-}, 1000);
         const container = document.getElementById('quiz-container');
         questions.forEach((item, index) => {
             let html = `<div class="question"><p><b>Câu ${index + 1}:</b> ${item.q}</p>`;
@@ -138,10 +103,8 @@ const countdown = setInterval(() => {
         });
 
         function submitQuiz() {
-            clearInterval(countdown);
             const name = document.getElementById('student-name').value;
             if (name.trim() === "") {
-                new Audio('https://actions.google.com/sounds/v1/ui/alarm_clock_alert.ogg').play();
                 Swal.fire({
                       title: 'Thông báo!',
                       text: 'Em vui lòng nhập tên trước khi nộp bài nhé!',
@@ -161,8 +124,6 @@ const countdown = setInterval(() => {
             }
 
             if (!allAnswered) {
-                // Thêm dòng này để phát nhạc:
-                new Audio('https://actions.google.com/sounds/v1/ui/notification_confirm.ogg').play();
                 Swal.fire({
                     title: 'Chưa xong đâu nhé!',
                     text: 'Em hình như bỏ sót câu hỏi rồi, kiểm tra lại nha ✨',
@@ -187,7 +148,6 @@ const countdown = setInterval(() => {
                     feedback.innerHTML = "❌Sai rồi. <br> 📝Đáp án đúng: " + item.options[item.answer] + ". Giải thích: " + item.exp;
                 }
             });
-            new Audio('https://actions.google.com/sounds/v1/ui/happy_bell_chime.ogg').play();
             Swal.fire({
                 title: '✨ Kết quả của ' + name.toUpperCase() + ' ✨',
                 text: 'Tổng điểm của em là: ' + score + '/10',
