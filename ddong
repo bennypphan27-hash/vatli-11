@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Lý thuyết về dao động - Lớp Lí cô Nguyên</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+ 	        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; max-width: 600px; margin: 20px auto; padding: 15px; 
+            background-color: #e3f2fd;
+            background-image: radial-gradient(#bbdefb 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        h2 { color: #0d47a1; text-align: center; }
+        h4 { text-align:center; color: #1565c0; }
+        
+        /* Đồng bộ khung thông tin và ô nhập liệu */
+        .info-box { 
+            background: #EFF9FF; 
+            padding: 15px; 
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+            border: 2px solid #64b5f6; 
+        }
+        input[type="text"] { 
+            width: 92%; padding: 10px; margin-top: 5px; 
+            border: 2px solid #64b5f6; border-radius: 8px; outline: none;
+        }
+        
+        .question { 
+            margin-bottom: 20px; padding: 15px; background: rgba(255, 255, 255, 0.9); 
+            border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border-left: 5px solid #1976d2;
+        }
+        
+        .feedback { display: none; margin-top: 10px; padding: 10px; border-radius: 5px; font-size: 0.95em; }
+        
+        #submit-btn { 
+            padding: 15px; width: 100%; font-size: 18px; background-color: #0d47a1; 
+            color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; 
+        }
+         #result-area { 
+            text-align: center; margin-top: 20px; font-size: 22px; font-weight: bold; 
+            color: #0d47a1; padding: 20px; background: #e3f2fd; border: 2px solid #64b5f6; border-radius: 15px; 
+        }
+        .back-btn {
+            background-color: #ffffff;
+            border: 2px solid #0d47a1;
+            padding: 10px 20px; border-radius: 20px; text-decoration: none;
+            color: #0d47a1; font-weight: bold; font-size: 14px; transition: 0.3s;
+        }
+        .back-btn:hover { background-color: #0d47a1; color: white; }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="index.html" class="back-btn">🏠 Trở về thư viện chính</a>
+    </div>
+    <h2>🌸 Ôn tập Lý thuyết về dao động 🌸</h2>
+    <h4>Lớp Lí cô Nguyên</h4>
+    
+    <div class="info-box">
+        <label for="student-name"><b>Họ và tên học sinh:</b></label>
+        <input type="text" id="student-name" placeholder="Nhập tên của em vào đây...">
+    </div>
+
+    <div id="quiz-container"></div>
+    <button id="submit-btn" onclick="submitQuiz()">NỘP BÀI VÀ XEM KẾT QUẢ</button>
+	<div id="result-area"></div>
+
+    <script>
+        const questions = [
+            { q: "Dao động cơ là chuyển động", options: ["có giới hạn trong không gian lặp đi lặp lại nhiều lần quanh một vị trí cân bằng.", " được mô tả bằng định luật hàm sin hay hàm cos theo thời gian.", "được lặp lại như cũ sau những khoảng thời gian bằng nhau gọi là chu kì.", "chỉ chịu tác dụng của nội lực."], answer: 0, exp: "Dao động cơ là chuyển động có giới hạn trong không gian lặp đi lặp lại nhiều lần quanh một vị trí cân bằng." },
+
+            { q: "Dao động tuần hoàn là chuyển động", options: ["có giới hạn trong không gian lặp đi lặp lại nhiều lần quanh một vị trí cân bằng.", " được mô tả bằng định luật hàm sin hay hàm cos theo thời gian.", "được lặp lại như cũ sau những khoảng thời gian bằng nhau gọi là chu kì.", "chỉ chịu tác dụng của nội lực."], answer: 2, exp: "Dao động tuần hoàn là chuyển động được lặp lại như cũ sau những khoảng thời gian bằng nhau gọi là chu kì." },
+
+            { q: "Dao động điều hòa là chuyển động", options: ["có giới hạn trong không gian lặp đi lặp lại nhiều lần quanh một vị trí cân bằng.", " được mô tả bằng định luật hàm sin hay hàm cos theo thời gian.", "được lặp lại như cũ sau những khoảng thời gian bằng nhau gọi là chu kì.", "chỉ chịu tác dụng của nội lực."], answer: 1, exp: "Dao động điều hòa được mô tả bằng định luật hàm sin hay hàm cos theo thời gian." },
+
+            { q: "Dao động tự do là chuyển động", options: ["có giới hạn trong không gian lặp đi lặp lại nhiều lần quanh một vị trí cân bằng.", " được mô tả bằng định luật hàm sin hay hàm cos theo thời gian.", "được lặp lại như cũ sau những khoảng thời gian bằng nhau gọi là chu kì.", "chỉ chịu tác dụng của nội lực."], answer: 3, exp: "Dao động tự do là chuyển động chỉ chịu tác dụng của nội lực." },
+
+            { q: "Chu kì dao động là", options: ["số dao động vật thực hiện trong một đơn vị thời gian.", "khoảng thời gian vật thực hiện một dao động toàn phần.", "khoảng thời gian vật đi từ biên này đến biên kia.", "khoảng thời gian giữa hai lần liên tiếp vật đi qua vị trí cân bằng."], answer: 1, exp: "Chu kì dao động là thời gian vật thực hiện được 1 dao động toàn phần." },
+
+            { q: "Tần số dao động là", options: ["số dao động vật thực hiện trong một đơn vị thời gian.", "khoảng thời gian vật thực hiện một dao động toàn phần.", "khoảng thời gian vật đi từ biên này đến biên kia.", "khoảng thời gian giữa hai lần liên tiếp vật đi qua vị trí cân bằng."], answer: 0, exp: "Chu kì dao động là thời gian vật thực hiện được 1 dao động toàn phần." },
+
+            { q: "Một chất điểm dao động điều hòa với phương trình $x = A\\cos(\\omega t + \\varphi)$ (cm). Quỹ đạo của chất điểm là", options: ["A", "4A", "2A", "A/2"], answer: 2, exp: "L = 2A" },
+
+            { q: "Một chất điểm dao động điều hòa với phương trình $x = A\\cos(\\omega t + \\varphi)$ (cm). Quãng đường chất điểm đi được trong một chu kì là", options: ["A", "4A", "2A", "A/2"], answer: 1, exp: "Quãng đường chất điểm đi được trong một chu kì là 4A" },
+
+            { q: "Một chất điểm dao động điều hòa với phương trình $x = -5\\cos(2\\pi t + \\pi/2)$ (cm). Biên độ của dao động là", options: ["$2\\pi$", "$\\pi/2$", "-5 cm", "5 cm"], answer: 3, exp: "A = 5 cm." },
+
+            { q: "Một chất điểm dao động điều hòa với phương trình $x = -6\\cos(4\\pi t - \\pi/2)$ (cm). Tần số góc của dao động là", options: ["$2\\pi$ rad/s", "$\\pi/2$ rad/s", "$4\\pi$ rad/s", "6 rad/s"], answer: 3, exp: "$\\omega = 4\\pi$ rad/s" }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        questions.forEach((item, index) => {
+            let html = `<div class="question"><p><b>Câu ${index + 1}:</b> ${item.q}</p>`;
+            item.options.forEach((opt, i) => html += `<input type="radio" name="q${index}" value="${i}"> ${opt}<br>`);
+            html += `<div id="f${index}" class="feedback"></div></div>`;
+            container.innerHTML += html;
+        });
+
+        function submitQuiz() {
+            const name = document.getElementById('student-name').value;
+            if (name.trim() === "") {
+                Swal.fire({ title: 'Thông báo!', text: 'Em vui lòng nhập tên trước khi nộp bài!', icon: 'warning',confirmButtonText: 'Đã hiểu' });
+                return;
+            }
+	let allAnswered = true;
+            for (let i = 0; i < questions.length; i++) {
+                if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+                      allAnswered = false;
+                    break; // Dừng kiểm tra nếu thấy câu chưa làm
+                }
+            }
+
+            if (!allAnswered) {
+                 Swal.fire({
+                    title: 'Chưa xong đâu nhé!',
+                    text: 'Em hình như bỏ sót câu hỏi rồi, kiểm tra lại nha ✨',
+                    icon: 'info',
+                    confirmButtonText: 'Để em kiểm tra lại'
+                });
+                return; // Dừng lại, không cho nộp bài
+            }
+            
+            let score = 0;
+            questions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const f = document.getElementById(`f${index}`);
+                f.style.display = "block";
+                if (parseInt(selected.value) === item.answer) {
+                    f.style.backgroundColor = "#e8f5e9"; f.innerHTML = "✅ Đúng rồi! <br> 📝Giải thích: " + item.exp; score++;
+                } else {
+                    f.style.backgroundColor = "#ffebee"; f.innerHTML = "❌ Sai rồi. <br> 📝Đáp án đúng: " + item.exp;
+                }
+            });
+ 		Swal.fire({
+                title: '✨ Kết quả của ' + name.toUpperCase() + ' ✨',
+                text: 'Tổng điểm của em là: ' + score + '/10',
+                icon: 'success',
+                confirmButtonText: 'Đóng'
+            });            
+		document.getElementById('submit-btn').style.display = "none";
+            MathJax.typeset();
+        }
+    </script>
+</body>
+</html>
